@@ -1,3 +1,17 @@
+controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
+    if (swordsman.isHittingTile(CollisionDirection.Bottom)) {
+        swordsman.vy = -600
+    }
+})
+controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
+    swordsman.setImage(leftFacingImg)
+})
+controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
+    swordsman.setImage(rightFacingImg)
+})
+let swordsman: Sprite = null
+let leftFacingImg: Image = null
+let rightFacingImg: Image = null
 let rightSwordOutImg = img`
     . . . . . . . f f . . . . . . . 
     . . . . f f f f 2 f f . . . . . 
@@ -34,7 +48,7 @@ let leftSwordOutImg = img`
     . . c . . . f f f f f f f f . . 
     . . . . . . . f f . . f f f . . 
     `
-let rightFacingImg = img`
+rightFacingImg = img`
     . . . . . . . . . . . . . . . . 
     . . . . . f f f f f f . . . . . 
     . . . f f e e e e f 2 f . . . . 
@@ -52,7 +66,7 @@ let rightFacingImg = img`
     . . . f f f f f f f f f f . . . 
     . . . . f f . . . f f f . . . . 
     `
-let leftFacingImg = img`
+leftFacingImg = img`
     . . . . . . . . . . . . . . . . 
     . . . . . f f f f f f . . . . . 
     . . . . f 2 f e e e e f f . . . 
@@ -70,3 +84,9 @@ let leftFacingImg = img`
     . . . f f f f f f f f f f . . . 
     . . . . f f f . . . f f . . . . 
     `
+swordsman = sprites.create(rightFacingImg, SpriteKind.Player)
+swordsman.ay = 300
+controller.moveSprite(swordsman, 80, 0)
+tiles.setTilemap(tilemap`level`)
+tiles.placeOnTile(swordsman, tiles.getTileLocation(8, 30))
+scene.cameraFollowSprite(swordsman)
